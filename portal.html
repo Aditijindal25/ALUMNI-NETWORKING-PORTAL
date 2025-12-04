@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alumni Networking Portal</title>
+
+<style>
+    *{
+        margin:0; padding:0;
+        font-family: "Poppins", sans-serif;
+        box-sizing: border-box;
+    }
+
+    body {
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        min-height: 100vh;
+    }
+
+    /* LOGIN PAGE */
+    #login-box {
+        width: 350px;
+        margin: 120px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(40px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+
+    #login-box h2 {
+        margin-bottom: 12px;
+        color:#333;
+    }
+
+    input {
+        width: 90%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 8px;
+        border: 1px solid #aaa;
+    }
+
+    button {
+        width: 90%;
+        padding: 10px;
+        border: none;
+        background: #6a11cb;
+        color: white;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #2575fc;
+    }
+
+    /* NAVIGATION + HEADER */
+    header {
+        background: rgba(255,255,255,0.15);
+        backdrop-filter: blur(8px);
+        color: white;
+        padding: 20px;
+        font-size: 26px;
+        text-align: center;
+        display:none;
+        font-weight: 600;
+    }
+
+    nav {
+        display:none;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(12px);
+        text-align:center;
+        padding:15px;
+    }
+
+    nav a {
+        color: white;
+        margin: 0 20px;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    nav a:hover {
+        color: #ffd700;
+    }
+
+    /* CONTENT SECTIONS */
+    .section {
+        display:none;
+        padding: 30px;
+        animation: fadeIn 0.5s ease;
+        color:white;
+    }
+
+    /* CARD DESIGN */
+    .card {
+        background: rgba(255,255,255,0.18);
+        padding: 20px;
+        border-radius: 15px;
+        margin-bottom: 15px;
+        backdrop-filter: blur(10px);
+        color: white;
+        font-size: 17px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        transition: transform 0.2s;
+    }
+
+    .card:hover {
+        transform: scale(1.03);
+    }
+
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login-box">
+    <h2>Welcome Back</h2>
+    <p style="color:#666;">Login to continue</p>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+</div>
+
+
+<!-- MAIN CONTENT -->
+<header id="header">🎓 Alumni Networking Portal</header>
+
+<nav id="menu">
+    <a href="#" onclick="showSection('home')">Home</a>
+    <a href="#" onclick="showSection('mentorship')">Mentorship</a>
+    <a href="#" onclick="showSection('jobs')">Jobs</a>
+    <a href="#" onclick="showSection('stories')">Stories</a>
+    <a href="#" onclick="logout()">Logout</a>
+</nav>
+
+<!-- HOME -->
+<div id="home" class="section">
+    <h2>Welcome to the Alumni Network</h2>
+    <p>Find mentors, discover job opportunities, and get inspired by alumni success.</p>
+</div>
+
+<!-- MENTORSHIP -->
+<div id="mentorship" class="section">
+    <h2 style="margin-bottom:15px;">Our Mentors</h2>
+
+    <div class="card">⭐ <b>Aditi Jindal</b> – AI & Web Development Mentor</div>
+    <div class="card">⭐ <b>Rahul Verma</b> – Data Science Mentor</div>
+    <div class="card">⭐ <b>Neha Sharma</b> – UI/UX & Product Design</div>
+</div>
+
+<!-- JOBS -->
+<div id="jobs" class="section">
+    <h2 style="margin-bottom:15px;">Latest Job Opportunities</h2>
+
+    <div class="card">💼 Frontend Developer – Google</div>
+    <div class="card">💼 Backend Engineer Intern – Microsoft</div>
+    <div class="card">💼 Data Science Intern – Infosys</div>
+</div>
+
+<!-- STORIES -->
+<div id="stories" class="section">
+    <h2 style="margin-bottom:15px;">Success Stories</h2>
+
+    <div class="card">🌟 Aditi became an AI Engineer and built multiple startups.</div>
+    <div class="card">🌟 Rahul founded a tech company and raised funding.</div>
+</div>
+
+<script>
+    // LOGIN SYSTEM
+    function login() {
+        let user = document.getElementById("username").value;
+        let pass = document.getElementById("password").value;
+
+        if (user === "admin" && pass === "123") {
+            localStorage.setItem("loggedIn", "true");
+            showSite();
+        } else {
+            alert("Incorrect login. Try admin / 123");
+        }
+    }
+
+    function showSite() {
+        document.getElementById("login-box").style.display = "none";
+        document.getElementById("header").style.display = "block";
+        document.getElementById("menu").style.display = "block";
+        showSection("home");
+    }
+
+    function showSection(id) {
+        let sections = document.getElementsByClassName("section");
+        for (let sec of sections) sec.style.display = "none";
+        document.getElementById(id).style.display = "block";
+    }
+
+    function logout() {
+        localStorage.removeItem("loggedIn");
+        location.reload();
+    }
+
+    // If already logged in
+    if (localStorage.getItem("loggedIn") === "true") {
+        showSite();
+    }
+</script>
+
+</body>
+</html>
